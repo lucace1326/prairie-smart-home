@@ -386,6 +386,14 @@
     .f-logo span { color:var(--copper); }
     footer p { color:rgba(246,240,228,.3); font-size:.78rem; letter-spacing:.03em; }
 
+    /* ── FORMSPREE STATES ── */
+    [data-fs-error]:not(:empty) { color:#e53e3e; font-size:.76rem; margin-top:.28rem; display:block; }
+    input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="true"] {
+      border-color:#e53e3e !important;
+    }
+    [data-fs-submit-btn]:disabled { opacity:.6; cursor:not-allowed; transform:none !important; }
+    [data-fs-success] { display:none; }
+
     /* ── REVEAL ── */
     .rev {
       opacity:0; transform:translateY(28px);
@@ -653,24 +661,34 @@
       </div>
 
       <div class="rev">
-        <div class="form-wrap" id="formWrap">
+        <!-- Formspree success state -->
+        <div data-fs-success class="f-ok">
+          <div class="f-ok-icon">✅</div>
+          <h3>We got your message!</h3>
+          <p>Thanks for reaching out. We'll be in touch within one business day to talk through the best automation setup for your home.</p>
+        </div>
+
+        <!-- Contact form -->
+        <form class="form-wrap" id="contactForm">
           <div class="frow">
             <div class="fgrp">
               <label for="fn">First Name *</label>
-              <input id="fn" type="text" placeholder="Jane">
+              <input id="fn" name="first_name" type="text" placeholder="Jane" data-fs-field required>
+              <span data-fs-error="first_name"></span>
             </div>
             <div class="fgrp">
-              <label for="ln">Last Name *</label>
-              <input id="ln" type="text" placeholder="Smith">
+              <label for="ln">Last Name</label>
+              <input id="ln" name="last_name" type="text" placeholder="Smith" data-fs-field>
             </div>
           </div>
           <div class="fgrp">
             <label for="em">Email Address *</label>
-            <input id="em" type="email" placeholder="jane@example.com">
+            <input id="em" name="email" type="email" placeholder="jane@example.com" data-fs-field required>
+            <span data-fs-error="email"></span>
           </div>
           <div class="fgrp">
             <label for="interest">I'm interested in…</label>
-            <select id="interest">
+            <select id="interest" name="service" data-fs-field>
               <option value="">Select a service</option>
               <option>Device Setup – Starter ($150–$250)</option>
               <option>Smart Home Hub ($300–$500)</option>
@@ -681,15 +699,12 @@
           </div>
           <div class="fgrp">
             <label for="msg">Tell us about your home (optional)</label>
-            <textarea id="msg" placeholder="e.g. 2-story house, already have a Roomba, want to automate my lights and lawn…"></textarea>
+            <textarea id="msg" name="message" placeholder="e.g. 2-story house, already have a Roomba, want to automate my lights and lawn…" data-fs-field></textarea>
           </div>
-          <button class="f-submit" onclick="doSubmit()">Send My Request →</button>
-        </div>
-        <div class="f-ok" id="formOk">
-          <div class="f-ok-icon">✅</div>
-          <h3>We got your message!</h3>
-          <p>Thanks for reaching out. We'll be in touch within one business day to talk through the best automation setup for your home.</p>
-        </div>
+          <!-- Global form error (e.g. network failure) -->
+          <span data-fs-error style="margin-bottom:.5rem"></span>
+          <button type="submit" class="f-submit" data-fs-submit-btn>Send My Request →</button>
+        </form>
       </div>
     </div>
   </div>
@@ -713,17 +728,10 @@
   }, { threshold: 0.08 });
   document.querySelectorAll('.rev').forEach(el => obs.observe(el));
 
-  // Form submit
-  function doSubmit() {
-    const fn = document.getElementById('fn').value.trim();
-    const em = document.getElementById('em').value.trim();
-    if (!fn || !em) {
-      alert('Please enter your name and email address.');
-      return;
-    }
-    document.getElementById('formWrap').style.display = 'none';
-    document.getElementById('formOk').style.display   = 'block';
-  }
+  // Formspree Ajax
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#contactForm', formId: 'xzdqbrrd' });
 </script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 </html>
