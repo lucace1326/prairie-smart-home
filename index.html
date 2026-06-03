@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrairieSmart | Home Automation · Bismarck, ND</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:        #0d1b2a;
+      --navy-mid:    #1a2e42;
+      --copper:      #c87941;
+      --copper-lt:   #e0964e;
+      --cream:       #f6f0e4;
+      --cream-lt:    #faf7f2;
+      --white:       #ffffff;
+      --text-dark:   #1a2234;
+      --text-mid:    #4a5568;
+      --text-lt:     #718096;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text-dark);
+      background: var(--cream-lt);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top:0; width:100%; z-index:200;
+      display: flex; justify-content:space-between; align-items:center;
+      padding: 1.1rem 4%;
+      background: rgba(13,27,42,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,121,65,0.18);
+    }
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.35rem; font-weight:600;
+      color: var(--cream); letter-spacing:-0.02em;
+    }
+    .logo span { color: var(--copper); }
+    nav ul { list-style:none; display:flex; gap:2rem; }
+    nav ul a {
+      color: rgba(246,240,228,0.72); text-decoration:none;
+      font-size:0.88rem; font-weight:500; letter-spacing:0.02em;
+      transition: color .2s;
+    }
+    nav ul a:hover { color: var(--copper); }
+    .nav-cta {
+      background: var(--copper) !important;
+      color: var(--white) !important;
+      padding: .45rem 1.1rem; border-radius:5px;
+      transition: background .2s !important;
+    }
+    .nav-cta:hover { background: var(--copper-lt) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex; align-items:center;
+      padding: 7rem 4% 5rem;
+      position: relative; overflow:hidden;
+    }
+    .hero-bg {
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 55% 60% at 72% 48%, rgba(200,121,65,.13) 0%, transparent 68%),
+        radial-gradient(ellipse 40% 55% at 15% 75%, rgba(138,170,142,.07) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position:absolute; inset:0;
+      background-image:
+        linear-gradient(rgba(200,121,65,.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,121,65,.055) 1px, transparent 1px);
+      background-size: 64px 64px;
+      animation: gridDrift 22s linear infinite;
+    }
+    @keyframes gridDrift {
+      from { transform:translate(0,0); }
+      to   { transform:translate(64px,64px); }
+    }
+    .hero-content { position:relative; z-index:2; max-width:680px; }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:.5rem;
+      background: rgba(200,121,65,.14);
+      border: 1px solid rgba(200,121,65,.4);
+      color: var(--copper-lt);
+      padding:.38rem .95rem; border-radius:100px;
+      font-size:.75rem; font-weight:600;
+      letter-spacing:.07em; text-transform:uppercase;
+      margin-bottom:1.8rem;
+      animation: fadeUp .6s ease both;
+    }
+    .hero-badge::before {
+      content:''; width:6px; height:6px;
+      background:var(--copper); border-radius:50%;
+      animation: dot 2s ease-in-out infinite;
+    }
+    @keyframes dot {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.4; transform:scale(1.5); }
+    }
+    h1 {
+      font-family:'Fraunces', serif;
+      font-size: clamp(2.9rem, 5.8vw, 4.8rem);
+      color: var(--cream); line-height:1.04;
+      font-weight:600; letter-spacing:-.03em;
+      margin-bottom:1.4rem;
+      animation: fadeUp .6s ease .1s both;
+    }
+    h1 em { font-style:italic; color:var(--copper); }
+    .hero-sub {
+      font-size:1.05rem; color:rgba(246,240,228,.6);
+      line-height:1.75; max-width:490px;
+      margin-bottom:2.4rem; font-weight:300;
+      animation: fadeUp .6s ease .2s both;
+    }
+    .hero-buttons {
+      display:flex; gap:1rem; flex-wrap:wrap;
+      animation: fadeUp .6s ease .3s both;
+    }
+    .btn-primary {
+      background:var(--copper); color:var(--white);
+      padding:.85rem 1.9rem; border-radius:6px;
+      text-decoration:none; font-weight:600; font-size:.93rem;
+      letter-spacing:.02em;
+      transition: background .2s, transform .2s;
+    }
+    .btn-primary:hover { background:var(--copper-lt); transform:translateY(-2px); }
+    .btn-outline {
+      background:transparent; color:var(--cream);
+      padding:.85rem 1.9rem; border-radius:6px;
+      text-decoration:none; font-weight:500; font-size:.93rem;
+      border:1px solid rgba(246,240,228,.28);
+      transition: border-color .2s, background .2s;
+    }
+    .btn-outline:hover { border-color:rgba(246,240,228,.65); background:rgba(246,240,228,.05); }
+
+    .hero-stats {
+      position:absolute; bottom:3.2rem; right:5%;
+      display:flex; gap:3rem;
+      animation: fadeUp .6s ease .5s both;
+    }
+    .stat-num {
+      font-family:'Fraunces', serif;
+      font-size:2.1rem; color:var(--copper); font-weight:600; line-height:1;
+    }
+    .stat-lbl {
+      font-size:.72rem; color:rgba(246,240,228,.42);
+      text-transform:uppercase; letter-spacing:.08em; margin-top:.25rem;
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── SHARED SECTION STYLES ── */
+    section { padding: 6rem 4%; }
+    .inner { max-width:1120px; margin:0 auto; }
+    .s-tag {
+      font-size:.72rem; font-weight:600;
+      letter-spacing:.12em; text-transform:uppercase;
+      color:var(--copper); margin-bottom:.65rem;
+    }
+    h2 {
+      font-family:'Fraunces', serif;
+      font-size: clamp(2rem, 3.8vw, 3rem);
+      color:var(--navy); font-weight:600;
+      letter-spacing:-.025em; line-height:1.1; margin-bottom:.9rem;
+    }
+    h2 em { font-style:italic; color:var(--copper); }
+    .s-sub {
+      font-size:.97rem; color:var(--text-mid);
+      line-height:1.72; max-width:500px; font-weight:300;
+    }
+
+    /* ── SERVICES ── */
+    #services { background:var(--cream-lt); }
+    .s-hdr { margin-bottom:3.5rem; }
+    .cards {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px,1fr));
+      gap:1.4rem;
+    }
+    .card {
+      background:var(--white); border-radius:14px;
+      padding:2.4rem; border:1px solid rgba(0,0,0,.06);
+      position:relative; overflow:hidden;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .card::after {
+      content:''; position:absolute; top:0; left:0; right:0;
+      height:3px; background:var(--copper);
+      transform:scaleX(0); transform-origin:left;
+      transition: transform .3s;
+    }
+    .card:hover { transform:translateY(-6px); box-shadow:0 22px 60px rgba(13,27,42,.1); }
+    .card:hover::after { transform:scaleX(1); }
+
+    .card.feat {
+      background:var(--navy); border-color:var(--navy);
+    }
+    .card.feat::after { transform:scaleX(1); }
+    .card.feat h3, .card.feat .price { color:var(--cream); }
+    .card.feat p, .card.feat .checks li { color:rgba(246,240,228,.62); }
+    .card.feat .price-note { color:rgba(246,240,228,.38); }
+
+    .c-tag {
+      display:inline-block;
+      background:rgba(200,121,65,.1); color:var(--copper);
+      padding:.22rem .7rem; border-radius:100px;
+      font-size:.72rem; font-weight:600;
+      letter-spacing:.06em; text-transform:uppercase;
+      margin-bottom:1.4rem;
+    }
+    .card.feat .c-tag { background:rgba(200,121,65,.2); }
+    .price {
+      font-family:'Fraunces', serif;
+      font-size:2.1rem; font-weight:600; color:var(--navy); line-height:1;
+    }
+    .price-note { font-size:.78rem; color:var(--text-lt); margin-bottom:1.4rem; }
+    h3 {
+      font-family:'Fraunces', serif;
+      font-size:1.35rem; font-weight:600;
+      color:var(--navy); margin-bottom:.45rem; letter-spacing:-.01em;
+    }
+    .card > p {
+      font-size:.88rem; color:var(--text-mid);
+      line-height:1.62; margin-bottom:1.5rem; font-weight:300;
+    }
+    .checks { list-style:none; display:flex; flex-direction:column; gap:.5rem; }
+    .checks li {
+      font-size:.85rem; color:var(--text-mid);
+      display:flex; align-items:center; gap:.5rem;
+    }
+    .checks li::before {
+      content:'✓'; color:var(--copper); font-weight:700;
+      font-size:.78rem; flex-shrink:0;
+    }
+
+    /* ── HOW IT WORKS ── */
+    #how { background:var(--navy); }
+    #how h2 { color:var(--cream); }
+    #how .s-sub { color:rgba(246,240,228,.5); }
+    .steps {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(230px,1fr));
+      gap:2.5rem; margin-top:4rem;
+    }
+    .step-num {
+      font-family:'Fraunces', serif;
+      font-size:3.8rem; font-weight:700;
+      color:rgba(200,121,65,.22); line-height:1; margin-bottom:.9rem;
+    }
+    .step h3 { color:var(--cream); margin-bottom:.6rem; font-size:1.15rem; }
+    .step p { font-size:.88rem; color:rgba(246,240,228,.46); line-height:1.72; font-weight:300; }
+
+    /* ── PRODUCTS ── */
+    #products { background:var(--cream); }
+    .p-hdr { margin-bottom:3.5rem; }
+    .pgrid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(180px,1fr));
+      gap:1rem;
+    }
+    .pcard {
+      background:var(--white); border-radius:12px;
+      padding:1.8rem 1.4rem; text-align:center;
+      border:1px solid rgba(0,0,0,.05);
+      transition: transform .22s, box-shadow .22s;
+    }
+    .pcard:hover { transform:translateY(-5px); box-shadow:0 14px 40px rgba(13,27,42,.08); }
+    .picon { font-size:2.4rem; margin-bottom:.9rem; display:block; }
+    h4 {
+      font-family:'Fraunces', serif; font-size:1rem;
+      font-weight:600; color:var(--navy); margin-bottom:.35rem;
+    }
+    .pcard p { font-size:.78rem; color:var(--text-lt); line-height:1.55; }
+
+    /* ── RECURRING ── */
+    #recurring { background:var(--navy); }
+    #recurring h2 { color:var(--cream); }
+    #recurring .s-sub { color:rgba(246,240,228,.5); }
+    .rgrid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+      gap:1.2rem; margin-top:3.5rem;
+    }
+    .rcard {
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(200,121,65,.18);
+      border-radius:12px; padding:2rem;
+      transition: background .25s, border-color .25s;
+    }
+    .rcard:hover {
+      background:rgba(255,255,255,.07);
+      border-color:rgba(200,121,65,.45);
+    }
+    .rcard-icon { font-size:1.8rem; margin-bottom:1rem; }
+    .rcard h3 { color:var(--cream); font-size:1.05rem; margin-bottom:.45rem; }
+    .rcard p { font-size:.84rem; color:rgba(246,240,228,.48); line-height:1.65; font-weight:300; }
+    .rcard-price {
+      margin-top:1rem; font-family:'Fraunces', serif;
+      font-size:1.2rem; color:var(--copper); font-weight:600;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background:var(--cream-lt); }
+    .cgrid {
+      display:grid; grid-template-columns:1fr 1.3fr;
+      gap:5rem; align-items:start; margin-top:4rem;
+    }
+    .cinfo h3 {
+      font-family:'Fraunces', serif; font-size:1.55rem;
+      color:var(--navy); margin-bottom:.9rem; font-weight:600;
+    }
+    .cinfo > p {
+      font-size:.93rem; color:var(--text-mid);
+      line-height:1.72; font-weight:300; margin-bottom:2rem;
+    }
+    .cfeature {
+      display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.4rem;
+    }
+    .cfi {
+      width:40px; height:40px;
+      background:rgba(200,121,65,.1); border-radius:8px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.05rem; flex-shrink:0;
+    }
+    .cft h4 { font-size:.88rem; font-weight:600; color:var(--navy); margin-bottom:.18rem; }
+    .cft p { font-size:.82rem; color:var(--text-lt); }
+
+    /* form */
+    .form-wrap {
+      background:var(--white); border-radius:16px;
+      padding:2.4rem; border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 6px 35px rgba(13,27,42,.06);
+    }
+    .frow { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .fgrp { margin-bottom:1.15rem; }
+    label {
+      display:block; font-size:.78rem; font-weight:600;
+      color:var(--text-dark); margin-bottom:.38rem; letter-spacing:.02em;
+    }
+    input, select, textarea {
+      width:100%; padding:.75rem .95rem;
+      border:1.5px solid rgba(0,0,0,.1); border-radius:8px;
+      font-family:'DM Sans', sans-serif; font-size:.9rem;
+      color:var(--text-dark); background:var(--cream-lt);
+      outline:none; transition: border-color .2s, background .2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color:var(--copper); background:var(--white);
+    }
+    textarea { resize:vertical; min-height:110px; }
+    .f-submit {
+      width:100%; background:var(--copper); color:var(--white);
+      padding:.95rem; border:none; border-radius:8px;
+      font-family:'DM Sans', sans-serif; font-size:.93rem;
+      font-weight:600; cursor:pointer; letter-spacing:.02em;
+      margin-top:.4rem;
+      transition: background .2s, transform .2s;
+    }
+    .f-submit:hover { background:var(--copper-lt); transform:translateY(-1px); }
+    .f-ok { display:none; text-align:center; padding:2rem 1rem; }
+    .f-ok-icon { font-size:2.8rem; margin-bottom:1rem; }
+    .f-ok h3 { font-family:'Fraunces', serif; color:var(--navy); margin-bottom:.5rem; }
+    .f-ok p { color:var(--text-mid); font-size:.88rem; line-height:1.6; }
+
+    /* ── FOOTER ── */
+    footer {
+      background:var(--navy);
+      padding:2.8rem 4%;
+      text-align:center;
+      border-top:1px solid rgba(200,121,65,.14);
+    }
+    .f-logo {
+      font-family:'Fraunces', serif; font-size:1.3rem;
+      color:var(--cream); font-weight:600; margin-bottom:.6rem;
+    }
+    .f-logo span { color:var(--copper); }
+    footer p { color:rgba(246,240,228,.3); font-size:.78rem; letter-spacing:.03em; }
+
+    /* ── REVEAL ── */
+    .rev {
+      opacity:0; transform:translateY(28px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .rev.on { opacity:1; transform:translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:820px) {
+      nav ul { display:none; }
+      .hero-stats { position:static; margin-top:2.8rem; }
+      .cgrid { grid-template-columns:1fr; gap:2.5rem; }
+      .frow { grid-template-columns:1fr; }
+    }
+    @media (max-width:480px) {
+      .hero-buttons { flex-direction:column; }
+      .hero-stats { gap:2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="logo">Prairie<span>Smart</span></div>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#products">We Install</a></li>
+    <li><a href="#recurring">Support Plans</a></li>
+    <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+  </ul>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Bismarck · Mandan, ND</div>
+    <h1>Your home,<br><em>working for you</em></h1>
+    <p class="hero-sub">We install and configure smart home systems, robot vacuums, and robot mowers — so you spend less time on chores and more time living.</p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn-primary">Get a Free Quote</a>
+      <a href="#services" class="btn-outline">View Packages</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">3</div>
+      <div class="stat-lbl">Service Tiers</div>
+    </div>
+    <div>
+      <div class="stat-num">1-Day</div>
+      <div class="stat-lbl">Response Time</div>
+    </div>
+    <div>
+      <div class="stat-num">∞</div>
+      <div class="stat-lbl">Automations</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICES ══ -->
+<section id="services">
+  <div class="inner">
+    <div class="s-hdr rev">
+      <div class="s-tag">Packages</div>
+      <h2>Pick your level of <em>smart</em></h2>
+      <p class="s-sub">Whether you want one robot or a fully automated home, we have a package that fits your needs and budget.</p>
+    </div>
+    <div class="cards">
+      <div class="card rev">
+        <div class="c-tag">Starter</div>
+        <div class="price">$150<span style="font-size:.95rem;font-family:'DM Sans';font-weight:300">–$250</span></div>
+        <div class="price-note">One-time setup fee</div>
+        <h3>Device Setup</h3>
+        <p>Perfect for getting your first robot running the right way — properly mapped and scheduled from day one.</p>
+        <ul class="checks">
+          <li>Robot vacuum or mower installation</li>
+          <li>Wi-Fi connection &amp; home mapping</li>
+          <li>Schedule &amp; zone configuration</li>
+          <li>In-person homeowner walkthrough</li>
+        </ul>
+      </div>
+      <div class="card feat rev">
+        <div class="c-tag">Most Popular</div>
+        <div class="price">$300<span style="font-size:.95rem;font-family:'DM Sans';font-weight:300">–$500</span></div>
+        <div class="price-note">One-time setup fee</div>
+        <h3>Smart Home Hub</h3>
+        <p>Connect all your smart devices into one powerful local system you control — with no monthly cloud subscriptions.</p>
+        <ul class="checks">
+          <li>Home Assistant installation</li>
+          <li>Connect lights, thermostat &amp; locks</li>
+          <li>2–3 custom automations built for you</li>
+          <li>Remote access setup</li>
+          <li>Full homeowner training session</li>
+        </ul>
+      </div>
+      <div class="card rev">
+        <div class="c-tag">Full Package</div>
+        <div class="price">$600<span style="font-size:.95rem;font-family:'DM Sans';font-weight:300">–$1,500+</span></div>
+        <div class="price-note">One-time setup fee</div>
+        <h3>Total Automation</h3>
+        <p>Your entire home working together — indoors and outdoors — with a custom dashboard and voice control.</p>
+        <ul class="checks">
+          <li>Everything in Smart Home Hub</li>
+          <li>Robot vacuum + mower setup</li>
+          <li>Outdoor zones, lighting &amp; irrigation</li>
+          <li>Custom dashboards &amp; voice control</li>
+          <li>Priority ongoing support included</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ══ -->
+<section id="how">
+  <div class="inner">
+    <div class="rev">
+      <div class="s-tag">Process</div>
+      <h2>Simple from <em>start to finish</em></h2>
+      <p class="s-sub">No tech knowledge required. We handle every step and make sure you're confident before we leave.</p>
+    </div>
+    <div class="steps">
+      <div class="rev">
+        <div class="step-num">01</div>
+        <h3>Tell Us Your Goals</h3>
+        <p>Fill out our quick form and describe what you'd like to automate. We'll follow up within one business day to talk through the right setup for your home.</p>
+      </div>
+      <div class="rev">
+        <div class="step-num">02</div>
+        <h3>We Come to You</h3>
+        <p>Our technician visits your home and handles all installation, configuration, and device mapping — usually completed in just a few hours.</p>
+      </div>
+      <div class="rev">
+        <div class="step-num">03</div>
+        <h3>Walk Away Automated</h3>
+        <p>We walk you through how everything works and make sure you're comfortable before we leave. Ongoing support is always a call away.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRODUCTS ══ -->
+<section id="products">
+  <div class="inner">
+    <div class="p-hdr rev">
+      <div class="s-tag">What We Install</div>
+      <h2>The best devices,<br><em>expertly configured</em></h2>
+      <p class="s-sub">We work with leading brands so your home gets reliable, future-proof technology that actually works together.</p>
+    </div>
+    <div class="pgrid rev">
+      <div class="pcard">
+        <span class="picon">🤖</span>
+        <h4>Robot Vacuums</h4>
+        <p>Roborock, Dreame &amp; iRobot — precision mapping and scheduled cleaning on autopilot</p>
+      </div>
+      <div class="pcard">
+        <span class="picon">🌿</span>
+        <h4>Robot Mowers</h4>
+        <p>Husqvarna Automower &amp; Mammotion LUBA — perfect lawns with zero weekly effort</p>
+      </div>
+      <div class="pcard">
+        <span class="picon">🏠</span>
+        <h4>Home Assistant</h4>
+        <p>The open-source hub that keeps your data local, private, and subscription-free</p>
+      </div>
+      <div class="pcard">
+        <span class="picon">💡</span>
+        <h4>Smart Lighting</h4>
+        <p>Matter-compatible bulbs and switches that work with everything — now and in the future</p>
+      </div>
+      <div class="pcard">
+        <span class="picon">🌡️</span>
+        <h4>Smart Thermostats</h4>
+        <p>Intelligent heating and cooling built around North Dakota winters — and your schedule</p>
+      </div>
+      <div class="pcard">
+        <span class="picon">🔐</span>
+        <h4>Locks &amp; Sensors</h4>
+        <p>Know who's home and automate your routines around arrivals and departures</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RECURRING / SUPPORT PLANS ══ -->
+<section id="recurring">
+  <div class="inner">
+    <div class="rev">
+      <div class="s-tag">Support Plans</div>
+      <h2>Keep everything <em>running smooth</em></h2>
+      <p class="s-sub">Optional ongoing plans so your smart home stays in top shape — without you having to think about it.</p>
+    </div>
+    <div class="rgrid rev">
+      <div class="rcard">
+        <div class="rcard-icon">🛠️</div>
+        <h3>Monthly Support</h3>
+        <p>Remote troubleshooting, software updates, and "my robot is stuck" calls covered — whenever you need us.</p>
+        <div class="rcard-price">$20–$50 / mo</div>
+      </div>
+      <div class="rcard">
+        <div class="rcard-icon">🌱</div>
+        <h3>Mower Seasonal Service</h3>
+        <p>Spring setup, fall winterization, and blade swap each year — so your mower is always ready to go.</p>
+        <div class="rcard-price">Per season</div>
+      </div>
+      <div class="rcard">
+        <div class="rcard-icon">📋</div>
+        <h3>Annual Checkup</h3>
+        <p>Full audit of your automations, updated integrations, and a session to add whatever's new on your wish list.</p>
+        <div class="rcard-price">Once a year</div>
+      </div>
+      <div class="rcard">
+        <div class="rcard-icon">⬆️</div>
+        <h3>Device Upgrades</h3>
+        <p>When it's time for something new, we handle the install, migration, and reconfiguration — no hassle.</p>
+        <div class="rcard-price">As needed</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="inner">
+    <div class="rev">
+      <div class="s-tag">Get in Touch</div>
+      <h2>Ready to <em>automate</em> your home?</h2>
+    </div>
+    <div class="cgrid">
+      <div class="cinfo rev">
+        <h3>Let's find the right setup for you</h3>
+        <p>Fill out the form and we'll get back to you within one business day. No commitment — just a friendly conversation about what's possible for your home.</p>
+        <div class="cfeature">
+          <div class="cfi">📍</div>
+          <div class="cft">
+            <h4>Serving Bismarck–Mandan</h4>
+            <p>In-home service across the greater Bismarck area</p>
+          </div>
+        </div>
+        <div class="cfeature">
+          <div class="cfi">⚡</div>
+          <div class="cft">
+            <h4>Fast Response</h4>
+            <p>We reply to all inquiries within one business day</p>
+          </div>
+        </div>
+        <div class="cfeature">
+          <div class="cfi">🛡️</div>
+          <div class="cft">
+            <h4>Satisfaction Guaranteed</h4>
+            <p>If something isn't working right after setup, we'll fix it free of charge</p>
+          </div>
+        </div>
+        <div class="cfeature">
+          <div class="cfi">❄️</div>
+          <div class="cft">
+            <h4>ND Winter Ready</h4>
+            <p>Seasonal mower service and cold-weather smart home setups are our specialty</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rev">
+        <div class="form-wrap" id="formWrap">
+          <div class="frow">
+            <div class="fgrp">
+              <label for="fn">First Name *</label>
+              <input id="fn" type="text" placeholder="Jane">
+            </div>
+            <div class="fgrp">
+              <label for="ln">Last Name *</label>
+              <input id="ln" type="text" placeholder="Smith">
+            </div>
+          </div>
+          <div class="fgrp">
+            <label for="em">Email Address *</label>
+            <input id="em" type="email" placeholder="jane@example.com">
+          </div>
+          <div class="fgrp">
+            <label for="interest">I'm interested in…</label>
+            <select id="interest">
+              <option value="">Select a service</option>
+              <option>Device Setup – Starter ($150–$250)</option>
+              <option>Smart Home Hub ($300–$500)</option>
+              <option>Total Automation – Full Package ($600–$1,500+)</option>
+              <option>Monthly Support Plan</option>
+              <option>Not sure yet — help me decide</option>
+            </select>
+          </div>
+          <div class="fgrp">
+            <label for="msg">Tell us about your home (optional)</label>
+            <textarea id="msg" placeholder="e.g. 2-story house, already have a Roomba, want to automate my lights and lawn…"></textarea>
+          </div>
+          <button class="f-submit" onclick="doSubmit()">Send My Request →</button>
+        </div>
+        <div class="f-ok" id="formOk">
+          <div class="f-ok-icon">✅</div>
+          <h3>We got your message!</h3>
+          <p>Thanks for reaching out. We'll be in touch within one business day to talk through the best automation setup for your home.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="f-logo">Prairie<span>Smart</span></div>
+  <p>Home automation services · Bismarck–Mandan, ND &nbsp;·&nbsp; © 2026 PrairieSmart &nbsp;·&nbsp; All rights reserved</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('on'), i * 90);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.rev').forEach(el => obs.observe(el));
+
+  // Form submit
+  function doSubmit() {
+    const fn = document.getElementById('fn').value.trim();
+    const em = document.getElementById('em').value.trim();
+    if (!fn || !em) {
+      alert('Please enter your name and email address.');
+      return;
+    }
+    document.getElementById('formWrap').style.display = 'none';
+    document.getElementById('formOk').style.display   = 'block';
+  }
+</script>
+</body>
+</html>
